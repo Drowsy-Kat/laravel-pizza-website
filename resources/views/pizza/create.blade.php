@@ -73,12 +73,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="category">Category Pizza</label>
-                                <select class="form-control" name="pizza_category">
-                                    <option value=""></option>
-                                    <option value="veggie">Veggie</option>
-                                    <option value="meat feast">Meat feast</option>
-                                    <option value="margherita">Margherita</option>
-                                    <option value="margherita">Meaty Halal</option>
+                                <select class="form-control" name="category_id">
+                                    <option value="">Select a category</option>
+                                    @foreach ($categories as $categoryId => $categoryName)
+                                        <option value="{{ $categoryId }}">{{ $categoryName }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">

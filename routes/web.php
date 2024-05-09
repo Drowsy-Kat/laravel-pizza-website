@@ -20,6 +20,12 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/menu', [App\Http\Controllers\CustomerController::class,'menu'])->name('customer.menu');
+Route::get('/cart', [App\Http\Controllers\CustomerController::class,'cart'])->name('customer.cart');
+Route::get('/history', [App\Http\Controllers\CustomerController::class,'history'])->name('customer.history');
+
+Route::post('/cart/{id}/add', [App\Http\Controllers\CustomerController::class,'add'])->name('cart.add');
+
 Route::group(['middleware' => 'admin'], function () {
     Route::get('/pizza', [App\Http\Controllers\PizzaController::class, 'index'])->name('pizza.index');
     Route::get('/pizza/create', [App\Http\Controllers\PizzaController::class, 'create'])->name('pizza.create');

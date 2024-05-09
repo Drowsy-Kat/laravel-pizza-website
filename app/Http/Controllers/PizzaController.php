@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PizzaStoreRequest;
 use App\Http\Requests\PizzaUpdateRequest;
 use App\Models\Pizza;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class PizzaController extends Controller
@@ -23,7 +24,8 @@ class PizzaController extends Controller
      */
     public function index()
     {
-        $pizzas = Pizza::all(); // Retrieve all pizzas from the database
+        $pizzas = Pizza::with('category')->get(); // Retrieve all pizzas from the database
+        
         return view('pizza.index', compact('pizzas')); // Pass the pizzas to the view
     }
 
@@ -32,8 +34,10 @@ class PizzaController extends Controller
      */
     public function create()
     {
-        // Retrieve distinct categories from the pizzas
-        $categories = Pizza::select('pizza_category')->distinct()->pluck('pizza_category');
+        // Retrieve categories from the categories table
+        $categories = Category::pluck('name', 'id');
+        
+        // Pass categories to the view
         return view('pizza.create', compact('categories'));
     }
 
@@ -55,7 +59,7 @@ class PizzaController extends Controller
             'pizza_large_price' => $request->pizza_large_price,
             'pizza_medium_price' => $request->pizza_medium_price,
             'pizza_small_price' => $request->pizza_small_price,
-            'pizza_category' => $request->pizza_category,
+            'pizza_category' => $request->category_id,
             'pizza_image' => $relativePath, // Store the modified path here
         ]);
         // Redirect or perform other actions after saving
@@ -79,9 +83,10 @@ class PizzaController extends Controller
     public function edit(string $id)
     {
         $pizza = Pizza::findOrFail($id);
+        $categories = Category::pluck('name', 'id');
         // Retrieve distinct categories from the pizzas
-        $categories = Pizza::select('pizza_category')->distinct()->pluck('pizza_category');
-        return view('pizza.edit', compact('pizza', 'categories'));
+        
+        return view('pizza.edit', compact('pizza'), compact('categories'));
     }
 
     /**
@@ -113,6 +118,11 @@ class PizzaController extends Controller
         }
         // No else block needed; if no new image is uploaded, we keep the current image
 
+
+
+
+
+
         // Update other pizza properties from the request
         $pizza->pizza_name = $request->pizza_name;
         $pizza->pizza_desc = $request->pizza_desc;
@@ -123,6 +133,10 @@ class PizzaController extends Controller
 
         // Save the updated pizza record
         $pizza->save();
+        $catagory = Category::find($request->pizza_category);
+        $pizza->pizza_category = $catagory;
+        $pizza->refresh();
+        
 
         // Redirect to a given route with a success message
         return redirect()->route('pizza.index')->with('message', 'Pizza updated successfully.');

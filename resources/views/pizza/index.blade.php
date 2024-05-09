@@ -59,7 +59,7 @@
                                         <th scope="row">{{ $pizza->id }}</th>
                                         <td>{{ $pizza->pizza_name }}</td>
                                         <td>{{ $pizza->pizza_desc }}</td>
-                                        <td>{{ $pizza->pizza_category}}</td>
+                                        <td>{{ $pizza->category->name }}</td>
                                         <td>{{ $pizza->pizza_large_price }}</td>
                                         <td>{{ $pizza->pizza_medium_price }}</td>
                                         <td>{{ $pizza->pizza_small_price }}</td>

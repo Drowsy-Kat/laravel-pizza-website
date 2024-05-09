@@ -15,13 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('pizza_name');
             $table->string('pizza_desc');
-            $table->string('pizza_small_price');
-            $table->string('pizza_medium_price');
-            $table->string('pizza_large_price');
-            $table->string('pizza_category');
+            $table->decimal('pizza_small_price', 8, 2);
+            $table->decimal('pizza_medium_price', 8, 2);
+            $table->decimal('pizza_large_price', 8, 2);
+            $table->unsignedBigInteger('pizza_category'); // Foreign key reference
             $table->string('pizza_image');
             $table->timestamps();
 
+            // Define foreign key constraint
+            $table->foreign('pizza_category')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
@@ -33,3 +35,4 @@ return new class extends Migration
         Schema::dropIfExists('pizzas');
     }
 };
+

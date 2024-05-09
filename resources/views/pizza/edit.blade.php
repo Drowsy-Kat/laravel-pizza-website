@@ -3,13 +3,13 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-    //================= add the error message
+
                 @if(count($errors) > 0)
                     @foreach ($errors->all() as $error)
                         <div class="alert alert-danger">{{ $error }}</div>
                     @endforeach
                 @endif
-  //=============================
+
                 <div class="card">
                     <div class="card-header">{{ __('Edit Pizza') }}</div>
                     <div class="card-body">
@@ -36,8 +36,8 @@
                                 <label for="pizza_category">Category</label>
                                 <select class="form-control" name="pizza_category" required>
                                     <option value="">Select a category</option>
-                                    @foreach($categories as $category)
-                                        <option value="{{ $category }}" {{ $pizza->pizza_category == $category ? 'selected' : '' }}>{{ $category }}</option>
+                                    @foreach ($categories as $categoryId => $categoryName)
+                                        <option value="{{ $categoryId }}">{{ $categoryName }}</option>
                                     @endforeach
                                 </select>
                             </div>

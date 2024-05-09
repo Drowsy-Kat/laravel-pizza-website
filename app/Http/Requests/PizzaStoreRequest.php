@@ -27,7 +27,7 @@ class PizzaStoreRequest extends FormRequest
             'pizza_large_price'=> 'required|numeric',
             'pizza_medium_price'=> 'required|numeric',
             'pizza_small_price'=> 'required|numeric',
-            'pizza_category'=> 'required',
+            'category_id' => 'required|exists:categories,id',
             'pizza_image' => 'required|mimes:png,jpeg,jpg'
         ];
     }
