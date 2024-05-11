@@ -51,4 +51,15 @@ class AdminController extends Controller
         // Redirect back with a success message
         return redirect()->back()->with('message', 'User registered successfully!');
     }
+
+    public function promote(string $id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $user->is_admin = $user->is_admin ? 0 : 1; // Toggle the value of is_admin field
+            $user->save();
+            // You can add any additional logic or redirect the user as needed
+        }
+        return redirect()->route('admin.users');
+    }
 }

@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('delivery_method_id'); // Add delivery method reference
             // Add other fields like total price, status, etc.
             $table->timestamps();
 
-            // Define foreign key constraint
+            // Define foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('delivery_method_id')->references('id')->on('delivery_method')->onDelete('cascade'); // Add foreign key constraint for delivery method
         });
     }
 

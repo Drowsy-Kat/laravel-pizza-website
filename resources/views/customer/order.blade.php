@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">{{ __('Cart') }}</div>
+                        <div class="card-header">{{ __('Order') }}</div>
                         <div class="card-body">
                             @if (session('message'))
                             <div class="alert alert-success" role="alert">
@@ -52,61 +52,55 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Number</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Pizza Category</th>
+                                        <th scope="col">size</th>
+                                        <th scope="col">Price</th>
                                         <th scope="col">Image</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(count($pizzas)>0)
-                                    @foreach($pizzas as $pizza)
-                                    <tr>
-                                        <th scope="row">{{ $pizza->id }}</th>
-                                        <td>{{ $pizza->pizza_name }}</td>
-                                        <td>{{ $pizza->pizza_desc }}</td>
-                                        <td>{{ $pizza->category->name }}</td>
-                                        <td>
-                                            <img src="{{ asset(str_replace('storage', 'storage', $pizza->pizza_image)) }}" alt="Pizza Image" style="width: 100px; height: auto;">
-                                        </td>
-                                        <td>
-                                            <form action="{{ route('cart.add', $pizza->id) }}" method="POST">
-                                                @csrf
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="size" id="largeSize{{ $pizza->id }}" value="3" checked>
-                                                    <label class="form-check-label" for="largeSize{{ $pizza->id }}">
-                                                        Large - £{{ $pizza->pizza_large_price }}
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="size" id="mediumSize{{ $pizza->id }}" value="2">
-                                                    <label class="form-check-label" for="mediumSize{{ $pizza->id }}">
-                                                        Medium - £{{ $pizza->pizza_medium_price }}
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="size" id="smallSize{{ $pizza->id }}" value="1">
-                                                    <label class="form-check-label" for="smallSize{{ $pizza->id }}">
-                                                        Small - £{{ $pizza->pizza_small_price }}
-                                                    </label>
-                                                </div>
-                                        </td>
-                                        <td>
-                                            <button type="submit" class="btn btn-primary">Add to Cart</button>
-                                        </td>
-                                            </form>
-
+                                    @if(count($orderItems)>0)
                                     
-                                            
-                                       
+                                    @foreach($orderItems as $orderItem)
+                                    <tr>
+                                        <th scope="row">{{ $orderItem->pizza->pizza_name}}</th>
+                                        <td>{{ $orderItem->size->name}}</td>
+                                        @if($orderItem->size->id == 1)
+                                        <td>{{ $orderItem->pizza->pizza_small_price}}</td>
+                                        @elseif($orderItem->size->id == 2)
+                                        <td>{{ $orderItem->pizza->pizza_medium_price}}</td>
+                                        @elseif($orderItem->size->id == 3)
+                                        <td>{{ $orderItem->pizza->pizza_large_price}}</td>
+                                        @endif
+                                        <td>
+                                            <img src="{{ asset(str_replace('storage', 'storage', $orderItem->pizza->pizza_image)) }}" alt="Pizza Image" style="width: 100px; height: auto;">
+                                        </td>
                                     </tr>
                                     @endforeach
+                                    
                                     @else
-                                    <p>No Pizza to display</p>
+                                    <p>Cart is Empty</p>
                                     @endif
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">{{__('Order')}}</div>
+                        <div class="card-body d-flex align-items-center">
+                            <h1 class="flex-grow-1">Total Cost: £{{$orderTotal}}</h1>
+                            <form action="{{ route('cart.checkout')}}" method="POST" class="d-inline ml-auto">
+                                @csrf
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="delivery_method" id="delivery" value="1" checked>
+                                    <label class="form-check-label" for="delivery">Delivery</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="delivery_method" id="collection" value="2">
+                                    <label class="form-check-label" for="collection">Collection</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary ml-2">Re-Order</button>
+                            </form>
                         </div>
                     </div>
                 </div>

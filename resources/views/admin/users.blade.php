@@ -58,6 +58,13 @@
                                 <td>{{ $user->name}}</td>
                                 <td>{{ $user->email}}</td>
                                 <td>{{ $user->is_admin ? 'Yes' : 'No' }}</td>
+                                <td>
+                                    <form method="POST" action="{{ route('admin.promote', ['id' => $user->id]) }}">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-primary">{{ $user->is_admin ? 'Demote' : 'Promote' }}</button>
+                                    </form>
+                                </td>
                             </tr>
                             @endforeach
                             @endif
