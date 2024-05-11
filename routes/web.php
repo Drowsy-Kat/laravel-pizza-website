@@ -23,6 +23,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/menu', [App\Http\Controllers\CustomerController::class,'menu'])->name('customer.menu');
 Route::get('/cart', [App\Http\Controllers\CustomerController::class,'cart'])->name('customer.cart');
 Route::get('/history', [App\Http\Controllers\CustomerController::class,'history'])->name('customer.history');
+
+// middlewear to ensure only the user who made the order can view it
 Route::get('/history/{id}', [App\Http\Controllers\CustomerController::class, 'order'])
     ->name('customer.order')
     ->middleware('customer.access');
@@ -30,7 +32,7 @@ Route::get('/history/{id}', [App\Http\Controllers\CustomerController::class, 'or
 Route::post('/cart/{id}/add', [App\Http\Controllers\CustomerController::class,'add'])->name('cart.add');
 
 Route::post('/cart/checkout', [App\Http\Controllers\CustomerController::class,'checkout'])->name('cart.checkout');
-
+// middlewear to ensure only admins can view pages or make post/delete requests that need admin permission 
 Route::group(['middleware' => 'admin'], function () {
     Route::get('/pizza', [App\Http\Controllers\PizzaController::class, 'index'])->name('pizza.index');
     Route::get('/pizza/create', [App\Http\Controllers\PizzaController::class, 'create'])->name('pizza.create');
