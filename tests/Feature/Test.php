@@ -346,6 +346,12 @@ class ExampleTest extends TestCase
         $adminUser->delete();   
     }
 
+    /**
+     * Test if an admin can change someone from a non admin to an admin
+     *
+     * @return void
+     */
+
     public function test_promotion()
     {
          // Create an admin user
