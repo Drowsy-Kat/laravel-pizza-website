@@ -12,6 +12,7 @@ class DeliveryMethod extends Model
     protected $table = 'delivery_method';
     protected $fillable = ['name'];
 
+    // establish database relationships
     public function orders()
     {
         return $this->hasMany(Order::class);

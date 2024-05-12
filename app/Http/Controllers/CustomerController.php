@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\OrderItem;
 class CustomerController extends Controller
 {
-    //
+    // ensures the user is logged in 
 
     public function __construct()
     {

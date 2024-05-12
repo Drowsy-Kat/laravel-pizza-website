@@ -13,7 +13,7 @@ class PizzaController extends Controller
 
 
 
-
+    //ensure the user is logged in
    public function __construct()
    {
        $this->middleware('auth');

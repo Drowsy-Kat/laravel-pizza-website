@@ -11,6 +11,8 @@ class Order extends Model
     
     protected $fillable = ['user_id', 'delivery_method_id', /* other fillable fields */];
 
+
+    // establish database relationships
     public function deliveryMethod()
     {
         return $this->belongsTo(DeliveryMethod::class);

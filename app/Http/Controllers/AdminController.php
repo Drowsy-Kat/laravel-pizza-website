@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    //
+    //ensures the user is logged in
 
     public function __construct()
     {
@@ -24,11 +24,15 @@ class AdminController extends Controller
         return view('admin.users', compact('users'));
     }
 
+        /**
+     * display a menu create a user
+     */
     public function user_create()
     {
         return view('admin.user-create');
     }
 
+    //function to register a user in the database
     public function register(Request $request)
     {
         // Validate incoming request
@@ -52,6 +56,7 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'User registered successfully!');
     }
 
+    // change a user to and from being an admin
     public function promote(string $id)
     {
         $user = User::find($id);
