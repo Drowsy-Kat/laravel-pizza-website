@@ -68,15 +68,6 @@ class PizzaController extends Controller
         return redirect()->route('pizza.index')->with('message', 'Pizza added successfully.');
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
