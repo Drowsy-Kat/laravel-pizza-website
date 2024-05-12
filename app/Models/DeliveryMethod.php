@@ -10,7 +10,7 @@ class DeliveryMethod extends Model
     use HasFactory;
 
     protected $table = 'delivery_method';
-    protected $fillable = ['name']; // Adjust as needed based on your requirements
+    protected $fillable = ['name'];
 
     public function orders()
     {

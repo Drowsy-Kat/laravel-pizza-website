@@ -11,6 +11,8 @@ class Pizza extends Model
 
     protected $guarded=[];
 
+
+    // esptablish database relationships
     public function category()
     {
         return $this->belongsTo(Category::class, 'pizza_category');

@@ -14,7 +14,7 @@ class AdminMiddleware
             return $next($request);
         }
 
-        // Return a 404 response if the user is not an admin
-        abort(404);
+        // Return a 403 response if the user is not an admin
+        abort(403);
     }
 }
